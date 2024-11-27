@@ -7,7 +7,7 @@ import {
 import { Server } from 'socket.io';
 import { RedisClientType, createClient } from 'redis';
 
-@WebSocketGateway({ cors: { origin: '*' } }) // Povolení CORS
+@WebSocketGateway({ cors: { origin: '*' } }) // allow cors
 export class CommentsGateway {
   @WebSocketServer()
   server: Server;
@@ -15,26 +15,24 @@ export class CommentsGateway {
   private redisClient: RedisClientType;
 
   constructor() {
-    // Připojení k Redis
+    // redis connection
     this.redisClient = createClient({ url: 'redis://blog_redis:6379' });
-    this.redisClient.connect().catch((err) => console.error('Redis error:', err));
+    this.redisClient
+      .connect()
+      .catch((err) => console.error('Redis error:', err));
+
+    this.redisClient.subscribe('comments', (message) =>
+      console.log('Message from Redis:', message),
+    );
   }
 
   @SubscribeMessage('newComment')
   async handleNewComment(@MessageBody() comment: any) {
-    // Publikace komentáře do Redis
     await this.redisClient.publish('comments', JSON.stringify(comment));
-    // Odeslání komentáře všem klientům
     this.server.emit('commentAdded', comment);
     console.log('Comment broadcasted:', comment);
   }
 }
-
-
-
-
-
-
 
 // import {
 //   WebSocketGateway,

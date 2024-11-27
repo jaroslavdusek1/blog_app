@@ -19,7 +19,7 @@ export class VotesGateway {
       url: 'redis://blog_redis:6379',
     });
 
-    this.redisClient.connect();
+    this.redisClient.connect().catch((err) => console.error(err));
   }
 
   @SubscribeMessage('newVote')

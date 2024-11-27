@@ -15,10 +15,12 @@ import { CommentsModule } from './comments/comments.module';
 import { VotesModule } from './votes/votes.module';
 import { PrismaModule } from './prisma/prisma.module';
 
+import { AppGateway } from './app.gateway';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ // handle env vars
+    ConfigModule.forRoot({
+      // handle env vars
       isGlobal: true, // available across the whole app
     }),
     TypeOrmModule.forRootAsync({
@@ -33,12 +35,12 @@ import { PrismaModule } from './prisma/prisma.module';
       }),
     }),
     AuthModule, // auth
-    ArticlesModule,  // articles
+    ArticlesModule, // articles
     CommentsModule, // comments
     VotesModule, // votes
-    PrismaModule
+    PrismaModule,
   ],
   controllers: [AppController], // controller responsible for handling http requests
-  providers: [AppService],
+  providers: [AppService, AppGateway],
 })
 export class AppModule {}
