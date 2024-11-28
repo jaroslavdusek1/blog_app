@@ -17,6 +17,11 @@ import { PrismaModule } from './prisma/prisma.module';
 
 import { AppGateway } from './app.gateway';
 
+// graphQL
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -34,11 +39,17 @@ import { AppGateway } from './app.gateway';
         synchronize: false, // let all migs on prisma
       }),
     }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver, // drive specification
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // automatically generate schema
+      playground: true, // turn on GraphQL Playground - dev env
+      debug: true, // display debug logs
+    }),
     AuthModule, // auth
     ArticlesModule, // articles
     CommentsModule, // comments
     VotesModule, // votes
-    PrismaModule,
+    PrismaModule, // prisma
   ],
   controllers: [AppController], // controller responsible for handling http requests
   providers: [AppService, AppGateway],

@@ -17,7 +17,7 @@ export class CommentsService {
       },
     });
 
-    // Vyslání nového komentáře přes WebSocket
+    // Odeslat nový komentář přes websocket
     this.commentsGateway.handleNewComment(newComment);
 
     return newComment;
