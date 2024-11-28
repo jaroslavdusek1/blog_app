@@ -1,16 +1,26 @@
-import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
-import { AuthService } from './auth.service';
+// auth.controller.ts
+import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
+import * as bcrypt from 'bcrypt';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   @Post('login')
-  async login(@Body() body: { username: string; password: string }) {
-    const user = await this.authService.validateUser(body.username, body.password);
-    if (!user) {
+  async login(@Body() loginDto: { username: string; password: string }) {
+    const user = await this.usersService.findByUsername(loginDto.username);
+    if (!user || !(await bcrypt.compare(loginDto.password, user.password))) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    return this.authService.login(user);
+
+    const payload = { username: user.username, sub: user.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }
