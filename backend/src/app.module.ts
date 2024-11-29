@@ -8,6 +8,7 @@ import { Article } from './articles/article.entity';
 import { User } from './users/user.entity';
 import { Comment } from './comments/comment.entity';
 import { Vote } from './votes/vote.entity';
+import { UsersModule } from './users/users.module';
 
 import { AuthModule } from './auth/auth.module';
 import { ArticlesModule } from './articles/articles.module';
@@ -36,7 +37,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
         url: configService.get<string>('DATABASE_URL'), // load db url
         entities: [Article, User, Comment, Vote],
         autoLoadEntities: true,
-        synchronize: false, // let all migs on prisma
+        // synchronize: false, // let all migs on prisma
+        synchronize: true, // let all migs on prisma // DEVELOPMENT ONLY delete later
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -49,6 +51,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
     ArticlesModule, // articles
     CommentsModule, // comments
     VotesModule, // votes
+    UsersModule, // users
     PrismaModule, // prisma
   ],
   controllers: [AppController], // controller responsible for handling http requests

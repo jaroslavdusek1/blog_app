@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import RecentArticles from './pages/RecentArticles';
+import ArticleDetail from './pages/ArticleDetail';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import AdminArticleList from './pages/admin/AdminArticleList';
+import AdminNewArticle from './pages/admin/AdminNewArticle';
+import AdminEditArticle from './pages/admin/AdminEditArticle';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<RecentArticles />} />
+        <Route path="/articles" element={<RecentArticles />} />
+        <Route path="/article/:id" element={<ArticleDetail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/admin/articles" element={<AdminArticleList />} />
+        <Route path="/admin/articles/new" element={<AdminNewArticle />} />
+        <Route path="/admin/articles/edit/:id" element={<AdminEditArticle />} />
+      </Routes>
+    </Router>
   );
 }
 

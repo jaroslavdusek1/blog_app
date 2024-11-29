@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Article } from '../articles/article.entity';
 
-@Entity()
+@Entity({ name: 'User' })
 @ObjectType()
 export class User {
   @PrimaryGeneratedColumn()
@@ -16,7 +16,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ default: 'user' })
   @Field(() => String)
   role: string;
 
