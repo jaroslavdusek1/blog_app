@@ -19,16 +19,3 @@ const registerUser = async (username: string, password: string) => {
 export const authService = {
   registerUser,
 };
-
-
-// import axios from 'axios';
-
-// export const login = async (credentials: { username: string; password: string }) => {
-//   const response = await axios.post('/auth/login', credentials);
-//   return response.data;
-// };
-
-// export const register = async (userData: { username: string; password: string }) => {
-//   const response = await axios.post('/users/register', userData);
-//   return response.data;
-// };

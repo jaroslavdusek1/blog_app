@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 function Navbar() {
-  const isLoggedIn = false;
+  const { isLoggedIn, logout } = useAuth();
 
   return (
     <nav className="bg-gray-800 text-white p-4">
@@ -17,10 +18,10 @@ function Navbar() {
         <div className="flex items-center">
           {isLoggedIn ? (
             <>
-              <Link to="/admin/articles" className="mr-4">My Articles</Link>
-              <Link to="/admin/articles/new" className="mr-4">Create Article</Link>
-              <button className="mr-4">Profile ▼</button>
-              <button>Log Out</button>
+              <Link to="/user/articles" className="mr-4">My articles</Link>
+              <Link to="/user/articles/new" className="mr-4">Publish article</Link>
+              <button className="mr-4">My Profile ▼</button>
+              <button onClick={logout}>Log Out</button>
             </>
           ) : (
             <>

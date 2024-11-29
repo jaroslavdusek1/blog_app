@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
 
     if (!username || !password) {
       setError('Please fill out both fields.');
@@ -15,7 +21,8 @@ const Login: React.FC = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/auth/login', {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+      const response = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -27,10 +34,17 @@ const Login: React.FC = () => {
 
       const data = await response.json();
       console.log('Login successful, token:', data.access_token);
-      // save token into localStorage/sessionStorage
+
+      // Save token into localStorage
       localStorage.setItem('authToken', data.access_token);
-    } catch (error) {
-      setError('Invalid username or password.');
+
+      // Set success message and navigate to /articles
+      setSuccess('Login successful! Redirecting...');
+      login();
+      setTimeout(() => navigate('/articles'), 1500);
+    } catch (error: any) {
+      const message = error instanceof Error ? error.message : 'Unexpected error occurred.';
+      setError(message);
     }
   };
 
@@ -44,6 +58,9 @@ const Login: React.FC = () => {
 
         {error && (
           <div className="text-red-500 text-sm mb-4 text-center">{error}</div>
+        )}
+        {success && (
+          <div className="text-green-500 text-sm mb-4 text-center">{success}</div>
         )}
 
         <div className="mb-4">
