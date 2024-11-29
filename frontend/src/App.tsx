@@ -19,9 +19,9 @@ function App() {
         <Route path="/article/:id" element={<ArticleDetail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/admin/articles" element={<AdminArticleList />} />
-        <Route path="/admin/articles/new" element={<AdminNewArticle />} />
-        <Route path="/admin/articles/edit/:id" element={<AdminEditArticle />} />
+        <Route path="/user/articles" element={<AdminArticleList />} />
+        <Route path="/user/articles/new" element={<AdminNewArticle />} />
+        <Route path="/user/articles/edit/:id" element={<AdminEditArticle />} />
       </Routes>
     </Router>
   );
