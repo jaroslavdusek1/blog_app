@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AdminNewArticle = () => {
+const UserNewArticle = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState<File | null>(null);
@@ -74,4 +74,4 @@ const AdminNewArticle = () => {
   );
 };
 
-export default AdminNewArticle;
+export default UserNewArticle;

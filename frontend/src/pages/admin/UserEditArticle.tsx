@@ -1,7 +1,7 @@
 import React from 'react';
 
-const AdminEditArticle = () => {
+const UserEditArticle = () => {
   return <div>Edit Article Page</div>;
 };
 
-export default AdminEditArticle;
+export default UserEditArticle;

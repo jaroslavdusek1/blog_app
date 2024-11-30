@@ -1,7 +1,7 @@
 import React from 'react';
 
-const AdminArticleList = () => {
+const UserArticleList = () => {
   return <div>Admin Article List Page</div>;
 };
 
-export default AdminArticleList;
+export default UserArticleList;
