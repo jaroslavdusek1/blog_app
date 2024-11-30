@@ -9,10 +9,16 @@ RUN apk add --no-cache \
   build-base \
   python3 \
   iputils \
-  netcat-openbsd
+  netcat-openbsd \
+  libjpeg-turbo-dev \
+  libpng-dev \
+  vips-dev
 
 # copy package.json && package-lock.json
 COPY package*.json ./
+
+# create a folder for imgs
+RUN mkdir -p /usr/src/app/uploads /usr/src/app/uploads/thumbnails
 
 # install dependencies
 RUN npm install

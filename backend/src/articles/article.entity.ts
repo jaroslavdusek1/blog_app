@@ -20,8 +20,8 @@ export class Article {
   @Field(() => String) // GraphQL field type string
   title: string;
 
-  @Column()
-  @Field(() => String) // GraphQL field type string
+  @Column({ nullable: true }) // Perex is optional
+  @Field(() => String, { nullable: true }) // GraphQL field is optional
   perex: string;
 
   @Column('text')
@@ -39,4 +39,7 @@ export class Article {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date) // GraphQL field type Date
   createdAt: Date;
+
+  @Column({ nullable: true })
+  image: string;
 }

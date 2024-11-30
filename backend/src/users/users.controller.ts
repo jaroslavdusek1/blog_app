@@ -18,11 +18,11 @@ export class UsersController {
     }
 
     if (
-      createUserDto.username.length < 5 ||
+      createUserDto.username.length < 3 ||
       createUserDto.username.length > 20
     ) {
       throw new BadRequestException(
-        'Username must be between 5 and 20 characters long.',
+        'Username must be between 3 and 20 characters long.',
       );
     }
 
