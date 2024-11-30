@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { authService } from '../services/authService';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -21,24 +22,12 @@ const Login: React.FC = () => {
     }
 
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
-      const response = await fetch(`${apiUrl}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Invalid credentials');
-      }
-
-      const data = await response.json();
+      const data = await authService.loginUser(username, password);
       console.log('Login successful, token:', data.access_token);
 
-      // Save token into localStorage
+      // Save a token into localStorage
       localStorage.setItem('authToken', data.access_token);
 
-      // Set success message and navigate to /articles
       setSuccess('Login successful! Redirecting...');
       login();
       setTimeout(() => navigate('/articles'), 1500);
