@@ -13,12 +13,11 @@ import Footer from './components/Footer';
 function App() {
   return (
     <Router>
-      {/* Celkové rozložení aplikace */}
-      <div className="flex flex-col min-h-screen">
-        {/* Navbar nahoře */}
+      {/* Overall application layout */}
+      <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-200 via-gray-250 to-gray-300">
         <Navbar />
 
-        {/* Hlavní obsah */}
+        {/* Main content */}
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<RecentArticles />} />
@@ -32,7 +31,7 @@ function App() {
           </Routes>
         </main>
 
-        {/* Footer dole */}
+        {/* Footer */}
         <Footer />
       </div>
     </Router>
