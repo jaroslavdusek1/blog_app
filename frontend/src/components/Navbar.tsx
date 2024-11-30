@@ -11,22 +11,22 @@ function Navbar() {
         {/* Left side - Logo and links */}
         <div className="flex items-center space-x-6">
           <Link
-            to="/articles"
+            to="/about"
             className="text-3xl font-bold text-blue-300 hover:text-white transition duration-300 transform hover:scale-105"
           >
             🐱 Blog App
           </Link>
+          {/* <Link
+            to="/about"
+            className="text-lg text-gray-300 hover:text-white transition duration-300 transform hover:scale-105"
+          >
+            About
+          </Link> */}
           <Link
             to="/articles"
             className="text-lg text-gray-300 hover:text-white transition duration-300 transform hover:scale-105"
           >
             Recent Articles
-          </Link>
-          <Link
-            to="/about"
-            className="text-lg text-gray-300 hover:text-white transition duration-300 transform hover:scale-105"
-          >
-            About
           </Link>
         </div>
 

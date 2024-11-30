@@ -4,9 +4,10 @@ import RecentArticles from './pages/RecentArticles';
 import ArticleDetail from './pages/ArticleDetail';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import UserArticleList from './pages/admin/UserArticleList';
-import UserNewArticle from './pages/admin/UserNewArticle';
-import UserEditArticle from './pages/admin/UserEditArticle';
+import UserArticleList from './pages/user/UserArticleList';
+import UserNewArticle from './pages/user/UserNewArticle';
+import UserEditArticle from './pages/user/UserEditArticle';
+import About from './pages/About';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/user/articles" element={<UserArticleList />} />
             <Route path="/user/articles/new" element={<UserNewArticle />} />
             <Route path="/user/articles/edit/:id" element={<UserEditArticle />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
 
