@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getArticlesByUserId } from '../../services/articleService';
 
-// Definice typu článku
 interface Article {
   id: number;
   title: string;
@@ -12,22 +11,19 @@ interface Article {
   image: string | null;
 }
 
-const UserArticleList = () => {
-  const [articles, setArticles] = useState<Article[]>([]); // Typujeme stav jako pole článků
-  const [error, setError] = useState<string>(''); // Typujeme chyby jako string
+const UserArticleList: React.FC = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
         const userId = parseInt(localStorage.getItem('userId') || '0', 10);
-
         if (!userId) {
           setError('User ID not found.');
           return;
         }
-
-        const data: Article[] = await getArticlesByUserId(userId); // Přidáme typ k datům
-        console.log('data', data);
+        const data: Article[] = await getArticlesByUserId(userId);
         setArticles(data);
       } catch (err) {
         setError('Failed to fetch articles.');
@@ -43,30 +39,39 @@ const UserArticleList = () => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">My Articles</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-700">My Articles</h1>
       {articles.length === 0 ? (
-        <p>No articles found.</p>
+        <p className="text-center text-gray-500">No articles found.</p>
       ) : (
-        <table className="min-w-full bg-white border border-gray-200">
-          <thead>
-            <tr>
-              <th className="px-4 py-2 border-b">ID</th>
-              <th className="px-4 py-2 border-b">Created At</th>
-              <th className="px-4 py-2 border-b">Title</th>
-              <th className="px-4 py-2 border-b">Perex</th>
-            </tr>
-          </thead>
-          <tbody>
-            {articles.map((article) => (
-              <tr key={article.id} className="text-center">
-                <td className="px-4 py-2 border-b">{article.id}</td>
-                <td className="px-4 py-2 border-b">{new Date(article.createdAt).toLocaleDateString()}</td>
-                <td className="px-4 py-2 border-b">{article.title}</td>
-                <td className="px-4 py-2 border-b">{article.perex || 'No perex available.'}</td>
+        <div className="overflow-hidden rounded-lg shadow-md border border-gray-300">
+          <table className="min-w-full bg-white">
+            <thead className="bg-gray-100 border-b-2 border-gray-200">
+              <tr>
+                <th className="px-6 py-3 text-left text-gray-600 font-semibold uppercase">ID</th>
+                <th className="px-6 py-3 text-left text-gray-600 font-semibold uppercase">Created At</th>
+                <th className="px-6 py-3 text-left text-gray-600 font-semibold uppercase">Title</th>
+                <th className="px-6 py-3 text-left text-gray-600 font-semibold uppercase">Perex</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {articles.map((article, index) => (
+                <tr
+                  key={article.id}
+                  className={`${
+                    index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                  } hover:bg-gray-100 transition-all`}
+                >
+                  <td className="px-6 py-4 text-gray-700">{article.id}</td>
+                  <td className="px-6 py-4 text-gray-700">
+                    {new Date(article.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 text-gray-700">{article.title}</td>
+                  <td className="px-6 py-4 text-gray-500">{article.perex || 'No perex available.'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

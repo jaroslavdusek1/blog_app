@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { multerOptions, generateThumbnail } from '../uploads/multer.config';
+import { multerOptions, generateThumbnail } from '../../multer.config';
 import { File as MulterFile } from 'multer';
 import * as fs from 'fs';
 import { AuthGuard } from '../auth/auth.guard';

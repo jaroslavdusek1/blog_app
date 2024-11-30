@@ -7,6 +7,8 @@ const registerUser = async (username: string, password: string, name: string, su
     const response = await axios.post(`${API_BASE_URL}/users/register`, {
       username,
       password,
+      name,
+      surname
     });
     return response.data; // get a response from the server api
   } catch (error: any) {
