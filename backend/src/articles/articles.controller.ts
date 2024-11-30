@@ -9,16 +9,19 @@ import {
   UploadedFile,
   UseInterceptors,
   BadRequestException,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions, generateThumbnail } from '../uploads/multer.config';
 import { File as MulterFile } from 'multer';
 import * as fs from 'fs';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('articles')
 export class ArticlesController {
-  constructor(private articlesService: ArticlesService) { }
+  constructor(private articlesService: ArticlesService) {}
 
   @Get()
   findAll() {
@@ -30,19 +33,37 @@ export class ArticlesController {
     return this.articlesService.findOne(+id);
   }
 
+  @Get('/user')
+  findAllByAuthor(@Req() req: any) {
+    const userId = req.user.id;
+    return this.articlesService.findAllByAuthor(userId);
+  }
+
+  @Get('my')
+  @UseGuards(AuthGuard)
+  async findMyArticle(@Req() req: any) {
+    const userId = req.user.id; // user id
+    return this.articlesService.findAllByAuthor(userId);
+  }
+
   @Post()
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('image', multerOptions))
-  async create(@Body() body: any, @UploadedFile() file: MulterFile) {
+  async create(
+    @Body() body: any,
+    @UploadedFile() file: MulterFile,
+    @Req() req: any,
+  ) {
     if (!body.title || !body.content) {
       throw new BadRequestException('Title and content are required');
     }
+    const userId = req.user.sub;
 
-    console.log('body', body);
-
-    const articleData: any = {
+    console.log('article data', {
       ...body,
       image: file?.filename || null,
-    };
+      authorId: req.user.id,
+    });
 
     if (file) {
       const uploadDir = './uploads/thumbnails';
@@ -56,10 +77,18 @@ export class ArticlesController {
       const thumbnailPath = `${uploadDir}/${file.filename}`;
 
       await generateThumbnail(originalPath, thumbnailPath);
-      articleData.thumbnail = `/uploads/thumbnails/${file.filename}`;
+      ({
+        ...body,
+        image: file?.filename || null,
+        authorId: userId,
+      }).thumbnail = `/uploads/thumbnails/${file.filename}`;
     }
 
-    return this.articlesService.create(articleData);
+    return this.articlesService.create({
+      ...body,
+      image: file?.filename || null,
+      authorId: userId,
+    });
   }
 
   @Put(':id')

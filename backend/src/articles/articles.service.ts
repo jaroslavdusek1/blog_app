@@ -18,6 +18,10 @@ export class ArticlesService {
     return this.articlesRepository.findOneBy({ id });
   }
 
+  findAllByAuthor(authorId: number) {
+    return this.articlesRepository.find({ where: { authorId } });
+  }
+
   create(article: Partial<Article>) {
     const newArticle = this.articlesRepository.create(article);
     return this.articlesRepository.save(newArticle);

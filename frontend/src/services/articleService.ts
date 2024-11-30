@@ -7,9 +7,13 @@ export const fetchArticles = async () => {
   return response.data;
 };
 
-export const createArticle = async (articleData: FormData) => {
+export const createArticle = async (articleData: any) => {
+  const token = localStorage.getItem('authToken');
   const response = await axios.post(`${API_BASE_URL}/articles`, articleData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`, // add a token to the request
+    },
   });
   return response.data;
 };

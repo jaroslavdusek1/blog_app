@@ -53,7 +53,7 @@ const UserNewArticle = () => {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      if (!file.type.startsWith('image/')) {
+      if (!!file && !file.type.startsWith('image/')) {
         setError('Please upload a valid image file.');
         setImage(null);
         setThumbnail(null);
@@ -83,14 +83,15 @@ const UserNewArticle = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('image', image);
-    formData.append('thumbnail', thumbnail || ''); // Send thumbnail as base64 or URL
+    const articleData = {
+      title: title,
+      content: content,
+      image: image,
+      thumbnail: thumbnail || ''
+    };
 
     try {
-      const response = await createArticle(formData);
+      const response = await createArticle(articleData);
       console.log('Article created:', response);
       setSuccess('Article published successfully!');
       setTitle('');

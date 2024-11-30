@@ -16,9 +16,9 @@ export const multerOptions = {
       callback: (arg0: null, arg1: string) => void,
     ) => {
       const uploadDir = './uploads';
-      console.log('Working directory:', process.cwd()); // Zjistí aktuální pracovní adresář
+      console.log('Working directory:', process.cwd());
       if (!fs.existsSync(uploadDir)) {
-        fs.mkdirSync(uploadDir, { recursive: true }); // Ensure directory exists
+        fs.mkdirSync(uploadDir, { recursive: true }); // make sure directory exists
         console.log(`Directory created: ${uploadDir}`);
       }
       callback(null, uploadDir);
@@ -57,26 +57,10 @@ export const generateThumbnail = async (
   outputPath: string,
 ) => {
   try {
-    console.log(`Generating thumbnail for: ${filePath}`);
     await sharp(filePath)
       .resize(300, 300, { fit: 'cover' }) // Resize to 300x300 px
       .toFile(outputPath);
-    console.log(`Thumbnail created at: ${outputPath}`);
   } catch (error) {
     console.error('Error generating thumbnail:', error);
   }
 };
-
-
-// export const generateThumbnail = async (
-//   filePath: string,
-//   outputPath: string,
-// ) => {
-//   try {
-//     await sharp(filePath)
-//       .resize(300, 300, { fit: 'cover' }) // Resize to 300x300 px
-//       .toFile(outputPath);
-//   } catch (error) {
-//     console.error('Error generating thumbnail:', error);
-//   }
-// };

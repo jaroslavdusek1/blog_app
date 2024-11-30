@@ -9,7 +9,7 @@ import { ObjectType, Field } from '@nestjs/graphql'; // annotations
 import { User } from '../users/user.entity';
 import { Comment } from '../comments/comment.entity';
 
-@Entity()
+@Entity({ name: 'Article' })
 @ObjectType() // mark class as GraphQL object type
 export class Article {
   @PrimaryGeneratedColumn()
@@ -35,6 +35,9 @@ export class Article {
   @ManyToOne(() => User, (user) => user.articles)
   @Field(() => User, { nullable: true }) // GraphQL field type User
   author: User;
+
+  @Column({ type: 'int', nullable: false }) // required
+  authorId: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date) // GraphQL field type Date

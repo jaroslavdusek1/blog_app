@@ -11,8 +11,6 @@ export class AuthGuard implements CanActivate {
     const authHeader = request.headers.authorization;
     if (!authHeader) {
       console.log('!authHeader');
-      console.log('!authHeader');
-      console.log('!authHeader');
       return false;
     }
 
@@ -20,7 +18,6 @@ export class AuthGuard implements CanActivate {
     try {
       const decoded = this.jwtService.verify(token);
 
-      console.log('decoded', decoded);
       request.user = decoded;
       return true;
     } catch (error) {

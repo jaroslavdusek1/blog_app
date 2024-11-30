@@ -39,6 +39,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
         autoLoadEntities: true,
         // synchronize: false, // let all migs on prisma
         synchronize: true, // let all migs on prisma // DEVELOPMENT ONLY delete later
+        // migrations: [join(__dirname, 'migrations/*.ts')], // adding paths for migrations
+        // migrationsTableName: 'migrations', // migrations table
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
