@@ -12,7 +12,11 @@ model User {
   username String  @unique
   password String
   role     String
+  name     String
+  surname  String
   articles Article[]
+
+  @@map("Users")
 }
 
 model Article {
@@ -24,6 +28,8 @@ model Article {
   author    User      @relation(fields: [authorId], references: [id])
   authorId  Int
   comments  Comment[]
+
+  @@map("Articles")
 }
 
 model Comment {
@@ -33,6 +39,8 @@ model Comment {
   article   Article   @relation(fields: [articleId], references: [id])
   articleId Int
   votes     Vote[]
+
+  @@map("Comments")
 }
 
 model Vote {
@@ -41,4 +49,6 @@ model Vote {
   voteType  String
   comment   Comment  @relation(fields: [commentId], references: [id])
   commentId Int
+
+  @@map("Votes")
 }

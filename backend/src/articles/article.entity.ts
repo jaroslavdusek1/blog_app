@@ -9,7 +9,7 @@ import { ObjectType, Field } from '@nestjs/graphql'; // annotations
 import { User } from '../users/user.entity';
 import { Comment } from '../comments/comment.entity';
 
-@Entity({ name: 'Article' })
+@Entity({ name: 'Articles' })
 @ObjectType() // mark class as GraphQL object type
 export class Article {
   @PrimaryGeneratedColumn()

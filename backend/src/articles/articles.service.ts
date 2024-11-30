@@ -22,6 +22,12 @@ export class ArticlesService {
     return this.articlesRepository.find({ where: { authorId } });
   }
 
+  async findArticlesByAuthorId(authorId: number) {
+    return this.articlesRepository.find({
+      where: { authorId },
+    });
+  }
+
   create(article: Partial<Article>) {
     const newArticle = this.articlesRepository.create(article);
     return this.articlesRepository.save(newArticle);

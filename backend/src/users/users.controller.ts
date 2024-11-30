@@ -8,7 +8,13 @@ export class UsersController {
 
   @Post('register')
   async register(
-    @Body() createUserDto: { username: string; password: string },
+    @Body()
+    createUserDto: {
+      username: string;
+      password: string;
+      name: string;
+      surname: string;
+    },
   ) {
     // validations
     if (!createUserDto.username || typeof createUserDto.username !== 'string') {
@@ -52,6 +58,8 @@ export class UsersController {
     return this.usersService.createUser({
       username: createUserDto.username,
       password: hashedPassword,
+      name: createUserDto.name,
+      surname: createUserDto.surname,
     });
   }
 }

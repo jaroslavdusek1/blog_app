@@ -17,3 +17,13 @@ export const createArticle = async (articleData: any) => {
   });
   return response.data;
 };
+
+export const getArticlesByUserId = async (userId: number) => {
+  const token = localStorage.getItem('token');
+  const response = await axios.get(`${API_BASE_URL}/articles/user/${userId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};

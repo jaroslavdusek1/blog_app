@@ -14,6 +14,8 @@ const Register: React.FC = () => {
     username: "",
     password: "",
     confirmPassword: "",
+    name: "",
+    surname: ""
   });
 
   const [error, setError] = useState("");
@@ -46,10 +48,10 @@ const Register: React.FC = () => {
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { username, password, confirmPassword } = formData;
+    const { username, password, confirmPassword, name, surname } = formData;
 
     // validations
-    if (!username || !password || !confirmPassword) {
+    if (!username || !password || !confirmPassword || !name || !surname) {
       setError("All fields are required.");
       return;
     }
@@ -71,9 +73,9 @@ const Register: React.FC = () => {
 
     try {
       // Call the backend for user registration
-      await authService.registerUser(username, password);
+      await authService.registerUser(username, password, name, surname);
       setSuccess("Registration successful! You can now log in.");
-      setFormData({ username: "", password: "", confirmPassword: "" });
+      setFormData({ username: "", password: "", confirmPassword: "", name: "", surname: "" });
       setTimeout(() => {
         navigate("/login"); // Redirect to the login page
       }, 1500);
@@ -91,6 +93,32 @@ const Register: React.FC = () => {
         <h1 className="text-2xl font-bold mb-4 text-center">Register</h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         {success && <p className="text-green-500 mb-4">{success}</p>}
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="surname" className="block text-sm font-medium text-gray-700">
+            Surname
+          </label>
+          <input
+            type="text"
+            id="surname"
+            name="surname"
+            value={formData.surname}
+            onChange={handleInputChange}
+            className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
         <div className="mb-4">
           <label htmlFor="username" className="block text-sm font-medium text-gray-700">
             Username

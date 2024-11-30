@@ -20,8 +20,10 @@ export class AuthController {
 
     const payload = { username: user.username, sub: user.id };
     const token = this.jwtService.sign(payload);
+
     return {
       access_token: token,
+      userId: user.id,
     };
   }
 }

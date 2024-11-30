@@ -39,6 +39,11 @@ export class ArticlesController {
     return this.articlesService.findAllByAuthor(userId);
   }
 
+  @Get('user/:userId')
+  async getArticlesByUser(@Param('userId') userId: number) {
+    return this.articlesService.findArticlesByAuthorId(userId);
+  }
+
   @Get('my')
   @UseGuards(AuthGuard)
   async findMyArticle(@Req() req: any) {
@@ -62,7 +67,7 @@ export class ArticlesController {
     console.log('article data', {
       ...body,
       image: file?.filename || null,
-      authorId: req.user.id,
+      authorId: req.user.sub,
     });
 
     if (file) {

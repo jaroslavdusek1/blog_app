@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Comment } from '../comments/comment.entity';
 
-@Entity({ name: 'Vote' })
+@Entity({ name: 'Votes' })
 @ObjectType()
 export class Vote {
   @PrimaryGeneratedColumn()

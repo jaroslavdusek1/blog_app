@@ -10,7 +10,12 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async createUser(userData: { username: string; password: string }) {
+  async createUser(userData: {
+    username: string;
+    password: string;
+    name: string;
+    surname: string;
+  }) {
     const user = this.userRepository.create(userData);
     return this.userRepository.save(user);
   }
