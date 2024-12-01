@@ -118,7 +118,7 @@ const UserNewArticle: React.FC = (): JSX.Element => {
     try {
       const response = await ArticleService.createArticle(articleData);
       console.log('Article created:', response);
-      setSuccess('Article published successfully!');
+      setSuccess('Article published successfully.');
       setTitle('');
       setContent('');
       setImage(null);

@@ -33,21 +33,10 @@ export class ArticlesController {
     return this.articlesService.findOne(+id);
   }
 
-  @Get('/user')
-  findAllByAuthor(@Req() req: any) {
-    const userId = req.user.id;
-    return this.articlesService.findAllByAuthor(userId);
-  }
-
-  @Get('user/:userId')
-  async getArticlesByUser(@Param('userId') userId: number) {
-    return this.articlesService.findArticlesByAuthorId(userId);
-  }
-
-  @Get('my')
+  @Get('user')
   @UseGuards(AuthGuard)
-  async findMyArticle(@Req() req: any) {
-    const userId = req.user.id; // user id
+  findAllByAuthor(@Req() req: any) {
+    const userId = req.user.sub;
     return this.articlesService.findAllByAuthor(userId);
   }
 
@@ -59,51 +48,36 @@ export class ArticlesController {
     @UploadedFile() file: MulterFile,
     @Req() req: any,
   ) {
-    if (!body.title || !body.content) {
-      throw new BadRequestException('Title and content are required');
-    }
     const userId = req.user.sub;
-
-    console.log('article data', {
+    const articleData = {
       ...body,
+      authorId: userId,
       image: file?.filename || null,
-      authorId: req.user.sub,
-    });
+    };
 
     if (file) {
       const uploadDir = './uploads/thumbnails';
       if (!fs.existsSync(uploadDir)) {
-        console.log('file does not exist');
-
-        fs.mkdirSync(uploadDir, { recursive: true }); // Ensure "thumbnails" directory exists
+        fs.mkdirSync(uploadDir, { recursive: true });
       }
-
       const originalPath = `./uploads/${file.filename}`;
       const thumbnailPath = `${uploadDir}/${file.filename}`;
-
       await generateThumbnail(originalPath, thumbnailPath);
-      ({
-        ...body,
-        image: file?.filename || null,
-        authorId: userId,
-      }).thumbnail = `/uploads/thumbnails/${file.filename}`;
+      articleData.thumbnail = `/uploads/thumbnails/${file.filename}`;
     }
 
-    return this.articlesService.create({
-      ...body,
-      image: file?.filename || null,
-      authorId: userId,
-    });
+    return this.articlesService.create(articleData);
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('image', multerOptions))
   async update(
     @Param('id') id: string,
     @Body() body: any,
     @UploadedFile() file: MulterFile,
   ) {
-    const articleData: any = {
+    const articleData = {
       ...body,
       image: file?.filename || body.image || null,
     };
@@ -113,12 +87,8 @@ export class ArticlesController {
       if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });
       }
-
-      console.log('Uploaded file path:', file?.path);
-
       const originalPath = `./uploads/${file.filename}`;
       const thumbnailPath = `${uploadDir}/${file.filename}`;
-
       await generateThumbnail(originalPath, thumbnailPath);
       articleData.thumbnail = `/uploads/thumbnails/${file.filename}`;
     }
@@ -127,6 +97,7 @@ export class ArticlesController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   delete(@Param('id') id: string) {
     return this.articlesService.delete(+id);
   }

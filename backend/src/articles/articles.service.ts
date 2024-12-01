@@ -33,9 +33,9 @@ export class ArticlesService {
     return this.articlesRepository.save(newArticle);
   }
 
-  async update(id: number, article: Partial<Article>) {
-    await this.articlesRepository.update(id, article);
-    return this.findOne(id);
+  async update(id: number, articleData: any): Promise<Article> {
+    await this.articlesRepository.update(id, articleData);
+    return this.articlesRepository.findOneBy({ id });
   }
 
   delete(id: number) {

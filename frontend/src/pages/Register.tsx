@@ -74,7 +74,7 @@ const Register: React.FC = () => {
     try {
       // Call the backend for user registration
       await AuthService.registerUser(username, password, name, surname);
-      setSuccess("Registration successful! You can now log in.");
+      setSuccess("Registration successful. You can now log in. Redirecting..");
       setFormData({ username: "", password: "", confirmPassword: "", name: "", surname: "" });
       setTimeout(() => {
         navigate("/login"); // Redirect to the login page

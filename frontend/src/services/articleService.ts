@@ -65,4 +65,28 @@ export class ArticleService {
       throw new Error('Failed to fetch articles by user ID.');
     }
   }
+
+  // 
+  static async getArticleById(id: number) {
+    const response = await axios.get(`${API_BASE_URL}/articles/${id}`);
+    return response.data;
+  }
+
+  static async updateArticle(id: number, articleData: any) {
+    const response = await axios.put(`${API_BASE_URL}/articles/${id}`, articleData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+    });
+    return response.data;
+  }
+
+  static async deleteArticle(id: number) {
+    const response = await axios.delete(`${API_BASE_URL}/articles/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+    });
+    return response.data;
+  }
 }

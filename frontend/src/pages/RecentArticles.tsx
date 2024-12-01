@@ -17,6 +17,8 @@ const UserArticles: React.FC = () => {
     const fetchData = async () => {
       try {
         const userArticles = await ArticleService.fetchArticles();
+
+        console.log("userArticles", userArticles);
         setArticles(userArticles);
       } catch (err) {
         setError('Failed to fetch articles.');
@@ -31,7 +33,7 @@ const UserArticles: React.FC = () => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4 text-center">My Articles</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Recent Articles</h1>
       {articles.length === 0 ? (
         <p className="text-gray-500 text-center">No articles found.</p>
       ) : (
@@ -39,10 +41,10 @@ const UserArticles: React.FC = () => {
           <table className="table-auto w-full border-collapse border border-gray-200 shadow-lg">
             <thead className="bg-gray-800 text-white">
               <tr>
-                <th className="px-4 py-2 border border-gray-300">ID</th>
-                <th className="px-4 py-2 border border-gray-300">Created At</th>
-                <th className="px-4 py-2 border border-gray-300">Title</th>
-                <th className="px-4 py-2 border border-gray-300">Perex</th>
+                <th className="px-4 py-2 border border-gray-300 text-center">ID</th>
+                <th className="px-4 py-2 border border-gray-300 text-center">Created At</th>
+                <th className="px-4 py-2 border border-gray-300 text-center">Title</th>
+                <th className="px-4 py-2 border border-gray-300 text-center">Perex</th>
               </tr>
             </thead>
             <tbody>
@@ -56,8 +58,10 @@ const UserArticles: React.FC = () => {
                   <td className="px-4 py-2 border border-gray-300 text-center">
                     {new Date(article.createdAt).toLocaleDateString()}
                   </td>
-                  <td className="px-4 py-2 border border-gray-300">{article.title}</td>
-                  <td className="px-4 py-2 border border-gray-300 truncate max-w-xs">{article.perex || 'No perex available.'}</td>
+                  <td className="px-4 py-2 border border-gray-300 text-center">{article.title}</td>
+                  <td className="px-4 py-2 border border-gray-300 text-center truncate max-w-xs">
+                    {article.perex || 'No perex available.'}
+                  </td>
                 </tr>
               ))}
             </tbody>
