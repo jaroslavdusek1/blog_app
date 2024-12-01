@@ -2,10 +2,23 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
+/**
+ * Navbar Component
+ *
+ * Renders the navigation bar for the Blog App. Includes links for navigation,
+ * dynamic options for logged-in and logged-out users, and a dropdown menu
+ * for user profile actions.
+ *
+ * @component
+ * @returns {JSX.Element} - The rendered Navbar component.
+ */
 const Navbar: React.FC = () => {
   const { isLoggedIn, logout } = useAuth();
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
+  /**
+   * Toggles the visibility of the dropdown menu in the navigation bar.
+   */
   const toggleDropdown = () => setDropdownVisible((prev) => !prev);
 
   return (

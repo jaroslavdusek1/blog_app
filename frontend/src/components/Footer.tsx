@@ -1,5 +1,13 @@
 import React from 'react';
 
+/**
+ * Footer Component
+ *
+ * A styled footer component for the Blog App, displaying copyright information,
+ * privacy policy, terms of service links, and a signature.
+ *
+ * @returns {JSX.Element} - The rendered footer component.
+ */
 const Footer = () => {
   return (
     <footer className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-gray-300 text-center py-6">
