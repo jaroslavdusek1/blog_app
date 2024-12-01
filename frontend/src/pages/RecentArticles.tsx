@@ -39,20 +39,24 @@ const UserArticles: React.FC = () => {
             <thead className="bg-gray-800 text-white">
               <tr>
                 <th className="px-4 py-2 border border-gray-300">ID</th>
+                <th className="px-4 py-2 border border-gray-300">Created At</th>
                 <th className="px-4 py-2 border border-gray-300">Title</th>
                 <th className="px-4 py-2 border border-gray-300">Content</th>
-                <th className="px-4 py-2 border border-gray-300">Created At</th>
               </tr>
             </thead>
             <tbody>
-              {articles.map((article) => (
-                <tr key={article.id} className="hover:bg-gray-100">
+              {articles.map((article, index) => (
+                <tr
+                  key={article.id}
+                  className={`bg-white hover:bg-gray-200 ${index % 2 === 0 ? 'bg-gray-50' : ''
+                    } transition-colors`}
+                >
                   <td className="px-4 py-2 border border-gray-300 text-center">{article.id}</td>
-                  <td className="px-4 py-2 border border-gray-300">{article.title}</td>
-                  <td className="px-4 py-2 border border-gray-300 truncate max-w-xs">{article.content}</td>
                   <td className="px-4 py-2 border border-gray-300 text-center">
                     {new Date(article.createdAt).toLocaleDateString()}
                   </td>
+                  <td className="px-4 py-2 border border-gray-300">{article.title}</td>
+                  <td className="px-4 py-2 border border-gray-300 truncate max-w-xs">{article.content}</td>
                 </tr>
               ))}
             </tbody>
@@ -61,6 +65,7 @@ const UserArticles: React.FC = () => {
       )}
     </div>
   );
+
 };
 
 export default UserArticles;
