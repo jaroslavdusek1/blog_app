@@ -2,28 +2,67 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
-export const fetchArticles = async () => {
-  const response = await axios.get(`${API_BASE_URL}/articles`);
-  return response.data;
-};
+/**
+ * ArticleService
+ *
+ * A service class for handling article-related API calls.
+ */
+export class ArticleService {
+  /**
+   * Fetch all articles.
+   * 
+   * @returns {Promise<any>} - The API response containing all articles.
+   * @throws {Error} - Throws an error if fetching articles fails.
+   */
+  static async fetchArticles(): Promise<any> {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/articles`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch articles.');
+    }
+  }
 
-export const createArticle = async (articleData: any) => {
-  const token = localStorage.getItem('authToken');
-  const response = await axios.post(`${API_BASE_URL}/articles`, articleData, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`, // add a token to the request
-    },
-  });
-  return response.data;
-};
+  /**
+   * Create a new article.
+   * 
+   * @param {any} articleData - The data of the article to create.
+   * @returns {Promise<any>} - The API response for the created article.
+   * @throws {Error} - Throws an error if creating the article fails.
+   */
+  static async createArticle(articleData: any): Promise<any> {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await axios.post(`${API_BASE_URL}/articles`, articleData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to create article.');
+    }
+  }
 
-export const getArticlesByUserId = async (userId: number) => {
-  const token = localStorage.getItem('token');
-  const response = await axios.get(`${API_BASE_URL}/articles/user/${userId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return response.data;
-};
+  /**
+   * Fetch articles by user ID.
+   * 
+   * @param {number} userId - The ID of the user.
+   * @returns {Promise<any>} - The API response containing articles for the user.
+   * @throws {Error} - Throws an error if fetching articles by user ID fails.
+   */
+  static async getArticlesByUserId(userId: number): Promise<any> {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await axios.get(`${API_BASE_URL}/articles/user/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch articles by user ID.');
+    }
+  }
+}

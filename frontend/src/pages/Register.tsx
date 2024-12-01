@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { authService } from "../services/authService";
+import { AuthService } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
 /**
@@ -73,7 +73,7 @@ const Register: React.FC = () => {
 
     try {
       // Call the backend for user registration
-      await authService.registerUser(username, password, name, surname);
+      await AuthService.registerUser(username, password, name, surname);
       setSuccess("Registration successful! You can now log in.");
       setFormData({ username: "", password: "", confirmPassword: "", name: "", surname: "" });
       setTimeout(() => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createArticle } from '../../services/articleService';
+import { ArticleService } from '../../services/articleService';
 
 const UserNewArticle = () => {
   const [title, setTitle] = useState('');
@@ -91,7 +91,7 @@ const UserNewArticle = () => {
     };
 
     try {
-      const response = await createArticle(articleData);
+      const response = await ArticleService.createArticle(articleData);
       console.log('Article created:', response);
       setSuccess('Article published successfully!');
       setTitle('');

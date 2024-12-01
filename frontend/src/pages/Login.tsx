@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { authService } from '../services/authService';
+import { AuthService } from '../services/authService';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -22,7 +22,7 @@ const Login: React.FC = () => {
     }
 
     try {
-      const data = await authService.loginUser(username, password);
+      const data = await AuthService.loginUser(username, password);
       console.log('Login successful, token:', data.access_token);
 
       // Save a token into localStorage

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchArticles } from '../services/articleService';
+import { ArticleService } from '../services/articleService';
 
 interface Article {
   id: number;
@@ -16,7 +16,7 @@ const UserArticles: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userArticles = await fetchArticles();
+        const userArticles = await ArticleService.fetchArticles();
         setArticles(userArticles);
       } catch (err) {
         setError('Failed to fetch articles.');

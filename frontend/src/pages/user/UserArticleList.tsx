@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getArticlesByUserId } from '../../services/articleService';
+import { ArticleService} from '../../services/articleService';
+
 
 interface Article {
   id: number;
@@ -25,7 +26,7 @@ const UserArticleList: React.FC = (): JSX.Element => {
           return;
         }
 
-        const data: Article[] = await getArticlesByUserId(userId);
+        const data: Article[] = await ArticleService.getArticlesByUserId(userId);
         console.log('data', data);
         setArticles(data);
       } catch (err) {

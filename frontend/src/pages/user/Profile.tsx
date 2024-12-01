@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { authService } from '../../services/authService';
+import { AuthService } from '../../services/authService';
 
 interface UserProfile {
     username: string;
@@ -28,7 +28,7 @@ const Profile: React.FC = () => {
     useEffect(() => {
         const loadProfile = async () => {
             try {
-                const data = await authService.fetchUserProfile();
+                const data = await AuthService.fetchUserProfile();
                 setProfile(data);
             } catch (err) {
                 setError('Failed to load profile.');
@@ -62,7 +62,7 @@ const Profile: React.FC = () => {
     const handleImageUpload = async () => {
         if (newImage) {
             try {
-                await authService.updateUserImage(newImage);
+                await AuthService.updateUserImage(newImage);
                 setProfile((prev) => (prev ? { ...prev, image: newImage } : prev));
                 setNewImage(null); // Hide the "Save" button after upload
                 setSuccessMessage('Upload successful.');
