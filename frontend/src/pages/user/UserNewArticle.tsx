@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
+import { marked } from 'marked';
 import { ArticleService } from '../../services/articleService';
 
 /**
  * UserNewArticle Component
  *
- * Allows the user to create a new article with a title, perex, content, and a featured image.
- * The component includes a feature to resize and preview the uploaded image.
+ * This component allows users to create a new article with a title, short description (perex), content,
+ * and a featured image. It includes a markdown editor for the content and a preview mode toggle.
+ * The image can be resized and previewed before submission.
+ *
+ * Features:
+ * - Title and short description input fields.
+ * - Markdown content editor with a preview toggle.
+ * - Image upload and resizing to a maximum of 200x200 pixels.
+ * - Form validation for required fields.
+ * - Error and success notifications.
  *
  * @component
  * @returns {JSX.Element} Rendered UserNewArticle component.
@@ -18,7 +27,17 @@ const UserNewArticle: React.FC = (): JSX.Element => {
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
 
+  /**
+   * Resizes an uploaded image to fit within the specified maximum width and height,
+   * while maintaining the aspect ratio.
+   *
+   * @param {File} file - The image file to resize.
+   * @param {number} maxWidth - The maximum width of the resized image.
+   * @param {number} maxHeight - The maximum height of the resized image.
+   * @returns {Promise<string>} A promise resolving to the resized image as a base64 string.
+   */
   const resizeImage = (file: File, maxWidth: number, maxHeight: number): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
       const img = new Image();
@@ -60,6 +79,11 @@ const UserNewArticle: React.FC = (): JSX.Element => {
     });
   };
 
+  /**
+   * Handles the image upload, resizing it to a maximum size of 200x200 pixels and creating a preview.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The change event triggered by the file input.
+   */
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -83,6 +107,10 @@ const UserNewArticle: React.FC = (): JSX.Element => {
     }
   };
 
+  /**
+   * Publishes the article by sending the data to the ArticleService.
+   * Ensures all required fields are filled and an image is uploaded.
+   */
   const handlePublish = async () => {
     if (!title || !perex || !content) {
       setError('Title, perex, and content are required.');
@@ -170,13 +198,32 @@ const UserNewArticle: React.FC = (): JSX.Element => {
         <label htmlFor="content" className="block text-lg font-medium mb-2">
           Content
         </label>
-        <textarea
-          id="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          className="w-full border border-gray-300 rounded px-4 py-2 h-40 focus:outline-none focus:ring focus:ring-blue-300"
-          placeholder="Support markdown. Yay!"
-        />
+        <div className="flex items-center mb-2">
+          <span className="mr-4">Markdown Editor</span>
+          <label className="flex items-center">
+            <span className="mr-2">Preview Mode</span>
+            <input
+              type="checkbox"
+              checked={isPreviewMode}
+              onChange={() => setIsPreviewMode((prev) => !prev)}
+              className="form-checkbox h-5 w-5 text-blue-600"
+            />
+          </label>
+        </div>
+        {!isPreviewMode ? (
+          <textarea
+            id="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="w-full border border-gray-300 rounded px-4 py-2 h-40 focus:outline-none focus:ring focus:ring-blue-300"
+            placeholder="Support markdown. Yay!"
+          />
+        ) : (
+          <div
+            className="w-full border border-gray-300 rounded px-4 py-2 h-40 bg-gray-50 overflow-auto"
+            dangerouslySetInnerHTML={{ __html: marked.parse(content || '') as string }}
+          />
+        )}
       </div>
 
       <div className="flex justify-end">
