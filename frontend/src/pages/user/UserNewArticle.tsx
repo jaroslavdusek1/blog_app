@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { ArticleService } from '../../services/articleService';
 
-const UserNewArticle = () => {
+/**
+ * UserNewArticle Component
+ *
+ * Allows the user to create a new article with a title, content, and a featured image.
+ * The component includes a feature to resize and preview the uploaded image.
+ *
+ * @component
+ * @returns {JSX.Element} Rendered UserNewArticle component.
+ */
+const UserNewArticle: React.FC = (): JSX.Element => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState<File | null>(null);
@@ -9,7 +18,15 @@ const UserNewArticle = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const resizeImage = (file: File, maxWidth: number, maxHeight: number) => {
+  /**
+   * Resize an image to the specified dimensions.
+   *
+   * @param {File} file - The image file to resize.
+   * @param {number} maxWidth - Maximum width of the resized image.
+   * @param {number} maxHeight - Maximum height of the resized image.
+   * @returns {Promise<string>} A promise that resolves to the base64 string of the resized image.
+   */
+  const resizeImage = (file: File, maxWidth: number, maxHeight: number): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
       const img = new Image();
       const reader = new FileReader();
@@ -50,10 +67,15 @@ const UserNewArticle = () => {
     });
   };
 
+  /**
+   * Handle image file upload, validate the file, and generate a thumbnail preview.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The file input change event.
+   */
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      if (!!file && !file.type.startsWith('image/')) {
+      if (!file.type.startsWith('image/')) {
         setError('Please upload a valid image file.');
         setImage(null);
         setThumbnail(null);
@@ -73,6 +95,9 @@ const UserNewArticle = () => {
     }
   };
 
+  /**
+   * Handle publishing the article by sending the article data to the backend.
+   */
   const handlePublish = async () => {
     if (!title || !content) {
       setError('Title and content are required.');
@@ -87,7 +112,7 @@ const UserNewArticle = () => {
       title: title,
       content: content,
       image: image,
-      thumbnail: thumbnail || ''
+      thumbnail: thumbnail || '',
     };
 
     try {

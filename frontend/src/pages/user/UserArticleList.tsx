@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArticleService} from '../../services/articleService';
-
+import { ArticleService } from '../../services/articleService';
 
 interface Article {
   id: number;
@@ -12,10 +11,22 @@ interface Article {
   image: string | null;
 }
 
+/**
+ * UserArticleList Component
+ *
+ * Displays a list of articles created by the currently logged-in user. 
+ * Fetches articles using the user's ID stored in localStorage.
+ *
+ * @component
+ * @returns {JSX.Element} - Rendered UserArticleList component.
+ */
 const UserArticleList: React.FC = (): JSX.Element => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [error, setError] = useState<string>('');
 
+  /**
+   * useEffect hook to fetch user-specific articles on component mount.
+   */
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -79,7 +90,6 @@ const UserArticleList: React.FC = (): JSX.Element => {
       )}
     </div>
   );
-  
 };
 
 export default UserArticleList;
