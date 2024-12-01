@@ -1,6 +1,16 @@
-import { Body, Controller, Post, BadRequestException } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  BadRequestException,
+  Get,
+  Req,
+  UseGuards,
+  Patch,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcryptjs';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -61,5 +71,37 @@ export class UsersController {
       name: createUserDto.name,
       surname: createUserDto.surname,
     });
+  }
+
+  @Get('me')
+  @UseGuards(AuthGuard)
+  async getProfile(@Req() req) {
+    const userId = req.user.sub;
+    return this.usersService.findOne(userId);
+  }
+
+  @Patch('me/image')
+  @UseGuards(AuthGuard)
+  async updateImage(
+    @Req() req,
+    @Body('image') image: string,
+  ): Promise<{ message: string }> {
+    if (!image) {
+      throw new BadRequestException('No image provided.');
+    }
+
+    // base64 validation
+    const base64Regex = /^data:image\/(png|jpeg|jpg|gif);base64,/;
+    if (!base64Regex.test(image)) {
+      throw new BadRequestException(
+        'Invalid image format. Must be a Base64 string.',
+      );
+    }
+
+    const userId = req.user.sub;
+    // save b64 encoded image in db
+    await this.usersService.updateImage(userId, image);
+
+    return { message: 'Image updated successfully' };
   }
 }

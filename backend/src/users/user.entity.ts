@@ -29,4 +29,7 @@ export class User {
 
   @Column()
   surname: string;
+
+  @Column({ nullable: true }) // base64 image
+  image: string;
 }

@@ -24,4 +24,17 @@ export class UsersService {
     const user = await this.userRepository.findOne({ where: { username } });
     return user;
   }
+
+  // user data
+  async findOne(userId: number) {
+    return this.userRepository.findOne({
+      where: { id: userId },
+      select: ['username', 'name', 'surname', 'role', 'image'],
+    });
+  }
+
+  // update image
+  async updateImage(userId: number, image: string): Promise<void> {
+    await this.userRepository.update(userId, { image });
+  }
 }
