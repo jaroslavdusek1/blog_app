@@ -6,6 +6,7 @@ interface Article {
   title: string;
   content: string;
   createdAt: string;
+  perex: string;
 }
 
 const UserArticles: React.FC = () => {
@@ -41,7 +42,7 @@ const UserArticles: React.FC = () => {
                 <th className="px-4 py-2 border border-gray-300">ID</th>
                 <th className="px-4 py-2 border border-gray-300">Created At</th>
                 <th className="px-4 py-2 border border-gray-300">Title</th>
-                <th className="px-4 py-2 border border-gray-300">Content</th>
+                <th className="px-4 py-2 border border-gray-300">Perex</th>
               </tr>
             </thead>
             <tbody>
@@ -56,7 +57,7 @@ const UserArticles: React.FC = () => {
                     {new Date(article.createdAt).toLocaleDateString()}
                   </td>
                   <td className="px-4 py-2 border border-gray-300">{article.title}</td>
-                  <td className="px-4 py-2 border border-gray-300 truncate max-w-xs">{article.content}</td>
+                  <td className="px-4 py-2 border border-gray-300 truncate max-w-xs">{article.perex || 'No perex available.'}</td>
                 </tr>
               ))}
             </tbody>

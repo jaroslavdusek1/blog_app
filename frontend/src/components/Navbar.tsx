@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-function Navbar() {
+const Navbar: React.FC = () => {
   const { isLoggedIn, logout } = useAuth();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const toggleDropdown = () => setDropdownVisible((prev) => !prev);
 
   return (
     <nav className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white shadow-lg">
@@ -22,12 +25,6 @@ function Navbar() {
           >
             Recent Articles
           </Link>
-          {/* <Link
-            to="/about"
-            className="text-lg text-gray-300 hover:text-white transition duration-300 transform hover:scale-105"
-          >
-            About
-          </Link> */}
         </div>
 
         {/* Right side - Auth-related links */}
@@ -46,25 +43,30 @@ function Navbar() {
               >
                 Publish Article
               </Link>
-              <div className="relative group">
-                <button className="text-lg text-gray-300 hover:text-white transition duration-300 transform hover:scale-105">
+              <div className="relative">
+                <button
+                  onClick={toggleDropdown}
+                  className="text-lg text-gray-300 hover:text-white transition duration-300 transform hover:scale-105 focus:outline-none"
+                >
                   My Profile ▼
                 </button>
                 {/* Dropdown menu */}
-                <div className="absolute hidden group-hover:block bg-gray-800 text-sm mt-2 rounded shadow-md">
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300"
-                  >
-                    View Profile
-                  </Link>
-                  <button
-                    onClick={logout}
-                    className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300"
-                  >
-                    Log Out
-                  </button>
-                </div>
+                {dropdownVisible && (
+                  <div className="absolute right-0 mt-2 bg-gray-800 text-sm rounded shadow-md z-10">
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300"
+                    >
+                      View Profile
+                    </Link>
+                    <button
+                      onClick={logout}
+                      className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-300"
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                )}
               </div>
             </>
           ) : (
@@ -87,6 +89,6 @@ function Navbar() {
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

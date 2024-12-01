@@ -36,7 +36,43 @@ const loginUser = async (username: string, password: string) => {
   }
 };
 
+export const fetchUserProfile = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/users/me`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch user profile:', error);
+    throw error;
+  }
+};
+
+const updateUserImage = async (base64Image: string) => {
+  try {
+    const response = await axios.patch(
+      `${API_BASE_URL}/users/me/image`,
+      { image: base64Image },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+        },
+      }
+    );
+    console.log(response.data.message);
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || 'Failed to update user image.',
+    );
+  }
+};
+
 export const authService = {
   registerUser,
-  loginUser
+  loginUser,
+  fetchUserProfile,
+  updateUserImage
 };
