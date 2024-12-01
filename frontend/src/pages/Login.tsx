@@ -28,7 +28,7 @@ const Login: React.FC = () => {
       // Save a token into localStorage
       localStorage.setItem('authToken', data.access_token);
 
-      setSuccess('Login successful! Redirecting...');
+      setSuccess('Login successful. Redirecting...');
       login();
       setTimeout(() => navigate('/articles'), 1500);
     } catch (error: any) {
