@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link
 import { ArticleService } from '../services/articleService';
-
-interface Article {
-  id: number;
-  title: string;
-  content: string;
-  createdAt: string;
-  perex: string;
-}
+import { Article } from '../types';
 
 const UserArticles: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -58,7 +52,15 @@ const UserArticles: React.FC = () => {
                   <td className="px-4 py-2 border border-gray-300 text-center">
                     {new Date(article.createdAt).toLocaleDateString()}
                   </td>
-                  <td className="px-4 py-2 border border-gray-300 text-center">{article.title}</td>
+                  <td className="px-4 py-2 border border-gray-300 text-center">
+                    {/* Add Link to Article Detail */}
+                    <Link
+                      to={`/article/${article.id}`}
+                      className="text-blue-500 hover:underline"
+                    >
+                      {article.title}
+                    </Link>
+                  </td>
                   <td className="px-4 py-2 border border-gray-300 text-center truncate max-w-xs">
                     {article.perex || 'No perex available.'}
                   </td>
@@ -70,7 +72,6 @@ const UserArticles: React.FC = () => {
       )}
     </div>
   );
-
 };
 
 export default UserArticles;

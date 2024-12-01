@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Article } from '../types';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
@@ -90,4 +91,14 @@ export class ArticleService {
     });
     return response.data;
   }
+
+  static async fetchArticleById(id: number): Promise<Article> {
+    const response = await axios.get(`${API_BASE_URL}/articles/${id}`);
+    return response.data;
+  }
+  
+  static async fetchRelatedArticles(currentArticleId: number): Promise<Article[]> {
+    const response = await axios.get(`${API_BASE_URL}/articles`);
+    return response.data.filter((article: Article) => article.id !== currentArticleId);
+  }  
 }
