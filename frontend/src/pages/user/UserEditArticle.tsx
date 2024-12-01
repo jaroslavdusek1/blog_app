@@ -5,6 +5,7 @@ import { ArticleService } from '../../services/articleService';
 const UserEditArticle: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [title, setTitle] = useState('');
+  const [perex, setPerex] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [thumbnail, setThumbnail] = useState<string | null>(null);
@@ -20,6 +21,7 @@ const UserEditArticle: React.FC = () => {
         }
         const article = await ArticleService.getArticleById(Number(id));
         setTitle(article.title);
+        setPerex(article.perex || '');
         setContent(article.content);
         setThumbnail(article.image || null);
       } catch (err) {
@@ -42,13 +44,14 @@ const UserEditArticle: React.FC = () => {
   };
 
   const handleUpdate = async () => {
-    if (!title || !content) {
-      setError('Title and content are required.');
+    if (!title || !perex || !content) {
+      setError('Title, perex, and content are required.');
       return;
     }
 
     const updatedData = {
       title,
+      perex,
       content,
       image: thumbnail,
     };
@@ -80,6 +83,19 @@ const UserEditArticle: React.FC = () => {
           onChange={(e) => setTitle(e.target.value)}
           className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring focus:ring-blue-300"
           placeholder="Enter article title..."
+        />
+      </div>
+
+      <div className="mb-6">
+        <label htmlFor="perex" className="block text-lg font-medium mb-2">
+          Perex (Short Description)
+        </label>
+        <textarea
+          id="perex"
+          value={perex}
+          onChange={(e) => setPerex(e.target.value)}
+          className="w-full border border-gray-300 rounded px-4 py-2 h-20 focus:outline-none focus:ring focus:ring-blue-300"
+          placeholder="Enter a short description for the article..."
         />
       </div>
 

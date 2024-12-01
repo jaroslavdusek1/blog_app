@@ -4,7 +4,7 @@ import { ArticleService } from '../../services/articleService';
 /**
  * UserNewArticle Component
  *
- * Allows the user to create a new article with a title, content, and a featured image.
+ * Allows the user to create a new article with a title, perex, content, and a featured image.
  * The component includes a feature to resize and preview the uploaded image.
  *
  * @component
@@ -12,20 +12,13 @@ import { ArticleService } from '../../services/articleService';
  */
 const UserNewArticle: React.FC = (): JSX.Element => {
   const [title, setTitle] = useState('');
+  const [perex, setPerex] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  /**
-   * Resize an image to the specified dimensions.
-   *
-   * @param {File} file - The image file to resize.
-   * @param {number} maxWidth - Maximum width of the resized image.
-   * @param {number} maxHeight - Maximum height of the resized image.
-   * @returns {Promise<string>} A promise that resolves to the base64 string of the resized image.
-   */
   const resizeImage = (file: File, maxWidth: number, maxHeight: number): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
       const img = new Image();
@@ -60,18 +53,13 @@ const UserNewArticle: React.FC = (): JSX.Element => {
 
         ctx.drawImage(img, 0, 0, width, height);
 
-        resolve(canvas.toDataURL('image/jpeg')); // Returns resized image as base64
+        resolve(canvas.toDataURL('image/jpeg'));
       };
 
       reader.readAsDataURL(file);
     });
   };
 
-  /**
-   * Handle image file upload, validate the file, and generate a thumbnail preview.
-   *
-   * @param {React.ChangeEvent<HTMLInputElement>} e - The file input change event.
-   */
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -95,12 +83,9 @@ const UserNewArticle: React.FC = (): JSX.Element => {
     }
   };
 
-  /**
-   * Handle publishing the article by sending the article data to the backend.
-   */
   const handlePublish = async () => {
-    if (!title || !content) {
-      setError('Title and content are required.');
+    if (!title || !perex || !content) {
+      setError('Title, perex, and content are required.');
       return;
     }
     if (!image) {
@@ -110,6 +95,7 @@ const UserNewArticle: React.FC = (): JSX.Element => {
 
     const articleData = {
       title: title,
+      perex: perex,
       content: content,
       image: image,
       thumbnail: thumbnail || '',
@@ -120,6 +106,7 @@ const UserNewArticle: React.FC = (): JSX.Element => {
       console.log('Article created:', response);
       setSuccess('Article published successfully.');
       setTitle('');
+      setPerex('');
       setContent('');
       setImage(null);
       setThumbnail(null);
@@ -146,6 +133,19 @@ const UserNewArticle: React.FC = (): JSX.Element => {
           onChange={(e) => setTitle(e.target.value)}
           className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring focus:ring-blue-300"
           placeholder="Enter article title..."
+        />
+      </div>
+
+      <div className="mb-6">
+        <label htmlFor="perex" className="block text-lg font-medium mb-2">
+          Perex (Short Description)
+        </label>
+        <textarea
+          id="perex"
+          value={perex}
+          onChange={(e) => setPerex(e.target.value)}
+          className="w-full border border-gray-300 rounded px-4 py-2 h-20 focus:outline-none focus:ring focus:ring-blue-300"
+          placeholder="Enter a short description for the article..."
         />
       </div>
 
