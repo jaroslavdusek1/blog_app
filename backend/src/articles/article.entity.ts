@@ -43,6 +43,6 @@ export class Article {
   @Field(() => Date) // GraphQL field type Date
   createdAt: Date;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'text' })
   image: string;
 }

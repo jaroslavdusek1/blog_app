@@ -11,26 +11,25 @@ export class ArticlesService {
   ) {}
 
   findAll() {
-    return this.articlesRepository.find();
+    return this.articlesRepository.find({
+      order: { createdAt: 'DESC' },
+    });
   }
 
   findOne(id: number) {
     return this.articlesRepository.findOneBy({ id });
   }
 
-  findAllByAuthor(authorId: number) {
-    return this.articlesRepository.find({ where: { authorId } });
-  }
-
   async findArticlesByAuthorId(authorId: number) {
     return this.articlesRepository.find({
       where: { authorId },
+      order: { createdAt: 'DESC' },
     });
   }
 
-  create(article: Partial<Article>) {
-    const newArticle = this.articlesRepository.create(article);
-    return this.articlesRepository.save(newArticle);
+  async create(articleData: Partial<Article>): Promise<Article> {
+    const article = this.articlesRepository.create(articleData);
+    return await this.articlesRepository.save(article);
   }
 
   async update(id: number, articleData: any): Promise<Article> {

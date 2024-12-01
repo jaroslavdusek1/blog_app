@@ -74,8 +74,8 @@ const UserNewArticle: React.FC = (): JSX.Element => {
         setError(null);
         setImage(file);
 
-        // Create thumbnail with max size 100x100
-        const thumbnailBase64 = await resizeImage(file, 100, 100);
+        // Create thumbnail with max size 200x200
+        const thumbnailBase64 = await resizeImage(file, 200, 200);
         setThumbnail(thumbnailBase64);
       } catch (error) {
         setError('Failed to process the image.');
@@ -97,8 +97,7 @@ const UserNewArticle: React.FC = (): JSX.Element => {
       title: title,
       perex: perex,
       content: content,
-      image: image,
-      thumbnail: thumbnail || '',
+      image: thumbnail,
     };
 
     try {

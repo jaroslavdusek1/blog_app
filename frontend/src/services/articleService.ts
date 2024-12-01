@@ -60,6 +60,7 @@ export class ArticleService {
           Authorization: `Bearer ${token}`,
         },
       });
+
       return response.data;
     } catch (error) {
       throw new Error('Failed to fetch articles by user ID.');

@@ -25,6 +25,7 @@ const UserArticleList: React.FC = (): JSX.Element => {
           setError('User ID not found.');
           return;
         }
+
         const data: Article[] = await ArticleService.getArticlesByUserId(userId);
         setArticles(data);
       } catch (err) {
