@@ -153,37 +153,37 @@ query {
 }
 ```
 
-![GraphQL Playground](public/graphql_playground.png)
+![GraphQL Playground](./frontend/public/graphql_playground.png)
 
 ## Visual blog app workflow
 ### Home Page
-![Home Page](public/home.png)
+![Home Page](./frontend/public/home.png)
 
 ### Registration Form
-![Registration Form](public/reg_form.png)
+![Registration Form](./frontend/public/reg_form.png)
 
 ### Login Page
-![Login Page](public/login.png)
+![Login Page](./frontend/public/login.png)
 
 ### My Profile
-![My Profile](public/my_profile.png)
+![My Profile](./frontend/public/my_profile.png)
 
 ### Recent Articles
-![Recent Articles](public/recent_articles.png)
+![Recent Articles](./frontend/public/recent_articles.png)
 
 ### Publish Article
-![Publish Article](public/publish.png)
+![Publish Article](./frontend/public/publish.png)
 
 ### Recent Articles Public
-![Recent Articles Public](public/recent_articles_public.png)
+![Recent Articles Public](./frontend/public/recent_articles_public.png)
 
 ### My Articles Admin
-![My Articles Admin](public/my_articles_admin.png)
+![My Articles Admin](./frontend/public/my_articles_admin.png)
 
 ### Edit Article
-![Edit Article](public/edit_article.png)
+![Edit Article](./frontend/public/edit_article.png)
 
 ### Article Detail
-![Article Detail](public/article_detail.png)
+![Article Detail](./frontend/public/article_detail.png)
 
 Enjoy :]
