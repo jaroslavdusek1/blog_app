@@ -5,7 +5,7 @@ A single-user blogging engine with post creation, comments, and voting, featurin
 This application provides a platform to create, publish, and interact with blog posts.
 
 ### Build on
-//// _Build on MacOS Ventura 13.6 and tested on Kali Linux Purple 2024.2_
+Build on MacOS Sequoia 15.0.1
 
 ## Files structure
 ```blog_app/
