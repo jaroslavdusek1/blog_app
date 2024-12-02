@@ -74,6 +74,13 @@ export class UsersController {
       surname: string;
     },
   ) {
+
+    // Check if username already exists
+    const existingUser = await this.usersService.findByUsername(createUserDto.username);
+    if (existingUser) {
+      throw new BadRequestException(`Username "${createUserDto.username}" is already taken.`);
+    }
+    
     // Username validation
     if (!createUserDto.username || typeof createUserDto.username !== 'string') {
       throw new BadRequestException(
