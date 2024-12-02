@@ -127,6 +127,9 @@ npm start
 Swagger Documentation: http://localhost:3000/api-docs
 Here, you can view and test the available REST API endpoints.
 
+![Swagger API Docs](public/swagger_api_docs.png)
+![Swagger API Docs Detail](public/swagger_api_docs_detail.png)
+
 
 ## GraphQL API
 Explore and test GraphQL queries in the Playground:
@@ -150,4 +153,37 @@ query {
 }
 ```
 
+![GraphQL Playground](public/graphql_playground.png)
 
+## Visual blog app workflow
+### Home Page
+![Home Page](public/home.png)
+
+### Registration Form
+![Registration Form](public/reg_form.png)
+
+### Login Page
+![Login Page](public/login.png)
+
+### My Profile
+![My Profile](public/my_profile.png)
+
+### Recent Articles
+![Recent Articles](public/recent_articles.png)
+
+### Publish Article
+![Publish Article](public/publish.png)
+
+### Recent Articles Public
+![Recent Articles Public](public/recent_articles_public.png)
+
+### My Articles Admin
+![My Articles Admin](public/my_articles_admin.png)
+
+### Edit Article
+![Edit Article](public/edit_article.png)
+
+### Article Detail
+![Article Detail](public/article_detail.png)
+
+Enjoy :]
