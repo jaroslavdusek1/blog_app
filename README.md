@@ -22,7 +22,6 @@ Build on MacOS Sequoia 15.0.1
 │   │   ├── articles/
 │   │   ├── auth/
 │   │   ├── comments/
-│   │   ├── prisma/
 │   │   ├── users/
 │   │   ├── votes/
 │   │   └── main.ts
@@ -31,8 +30,6 @@ Build on MacOS Sequoia 15.0.1
 ├── frontend/
 │   ├── Dockerfile
 │   ├── package.json
-│   ├── prisma/
-│   │   └── schema.prisma
 │   ├── src/
 │   │   ├── App.tsx
 │   │   ├── components/
