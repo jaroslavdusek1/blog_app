@@ -22,7 +22,7 @@ async function bootstrap() {
 
   // Allow CORS
   app.enableCors({
-    origin: 'http://localhost:3002', // fe url
+    origin: 'http://localhost:3001', // fe url
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // might be more strict
     credentials: true,
   });
