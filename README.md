@@ -75,7 +75,19 @@ cd blog_app
 ```
 
 2. Run the Application with Docker
-Ensure Docker is installed and running. Use the following command to start the application:
+Run Docker in a Single Command Sequence
+For Linux:
+```bash
+sudo systemctl start docker && sudo systemctl status docker && docker --version
+```
+
+For macOS:
+On macOS, Docker Desktop needs to be launched manually. Use this command to check Docker's version and confirm it's running:
+```bash
+docker --version
+```
+
+After confirming Docker is running, navigate to the directory containing your docker-compose.yml (/blog_app) file and run the application (macOS && linux):
 ```bash
 docker-compose up --build
 ```
@@ -86,6 +98,28 @@ Frontend: http://localhost:3001
 Backend: http://localhost:3000
 GraphQL Playground: http://localhost:3000/graphql
 Swagger API Docs: http://localhost:3000/api-docs
+
+### Verify running app via netstat
+```bash
+Linux/Mac
+netstat -tuln | grep 3000
+netstat -tuln | grep 3001
+
+On Mac (Alternative with lsof):
+lsof -i :3000
+lsof -i :3001
+```
+
+If your services are running, you should see output similar to this:
+```bash
+tcp        0      0 0.0.0.0:3000          0.0.0.0:*             LISTEN
+tcp        0      0 0.0.0.0:3001          0.0.0.0:*             LISTEN
+
+or
+
+com.docke 59731   jd  185u  IPv6 0x6aeaeae6b75ab14b      0t0  TCP *:hbci (LISTEN)
+com.docke 59731   jd  187u  IPv6 0x6d670f0a0a8687f0      0t0  TCP *:redwood-broker (LISTEN)
+```
 
 ## Development Setup
 To run the backend or frontend locally:
