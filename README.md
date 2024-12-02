@@ -60,9 +60,9 @@ Build on MacOS Sequoia 15.0.1
 ```
 
 ## Files structure
-User Authentication: Register with a unique username and password.
-Create and Manage Articles: Write, edit, and delete your articles.
-Commenting System: Add comments to articles and interact with the community.
+User Authentication: Register with a unique username and password.  
+Create and Manage Articles: Write, edit, and delete your articles.  
+Commenting System: Add comments to articles and interact with the community.  
 Comment Voting: Upvote or downvote comments to promote engaging discussions.
 
 ## Step-by-Step Setup
@@ -94,12 +94,12 @@ docker-compose up --build
 
 The application will start and be accessible at:
 
-Frontend: http://localhost:3001
-Backend: http://localhost:3000
-GraphQL Playground: http://localhost:3000/graphql
-Swagger API Docs: http://localhost:3000/api-docs
+Frontend: [http://localhost:3001](http://localhost:3001)  
+Backend: [http://localhost:3000](http://localhost:3000)  
+GraphQL Playground: [http://localhost:3000/graphql](http://localhost:3000/graphql)  
+Swagger API Docs: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
 
-### Verify running app via netstat
+### Verify a running application via netstat:
 ```bash
 Linux/Mac
 netstat -tuln | grep 3000
@@ -161,8 +161,8 @@ npm start
 Swagger Documentation: http://localhost:3000/api-docs
 Here, you can view and test the available REST API endpoints.
 
-![Swagger API Docs](public/swagger_api_docs.png)
-![Swagger API Docs Detail](public/swagger_api_docs_detail.png)
+![Swagger API Docs](./frontend/public/swagger_api_docs.png)
+![Swagger API Docs Detail](./frontend/public/swagger_api_docs_detail.png)
 
 
 ## GraphQL API
@@ -201,9 +201,6 @@ query {
 
 ### My Profile
 ![My Profile](./frontend/public/my_profile.png)
-
-### Recent Articles
-![Recent Articles](./frontend/public/recent_articles.png)
 
 ### Publish Article
 ![Publish Article](./frontend/public/publish.png)
