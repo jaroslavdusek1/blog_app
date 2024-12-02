@@ -153,6 +153,28 @@ npm install
 npm start
 ```
 
+## Check docker containers
+```bash
+docker ps
+
+result supposed to be like this
+CONTAINER ID   IMAGE               COMMAND                  CREATED              STATUS                        PORTS                    NAMES
+1cb1dff77a6c   blog_app-frontend   "docker-entrypoint.s…"   About a minute ago   Up About a minute             0.0.0.0:3001->3000/tcp   blog_frontend
+29a55484e4d6   blog_app-backend    "docker-entrypoint.s…"   About a minute ago   Up About a minute             0.0.0.0:3000->3000/tcp   blog_backend
+e5777e51194f   postgres:15         "docker-entrypoint.s…"   2 hours ago          Up About a minute (healthy)   0.0.0.0:5432->5432/tcp   blog_db
+b4c542ada544   redis:latest        "docker-entrypoint.s…"   2 hours ago          Up About a minute             0.0.0.0:6379->6379/tcp   blog_redis
+
+```
+
+## Access DB
+```bash
+docker exec -it blog_db psql -U postgres -d blog
+psql (15.10 (Debian 15.10-1.pgdg120+1))
+Type "help" for help.
+
+blog=# \dt (see tables)
+```
+
 ## API Endpoints Documentation
 
 Swagger Documentation: http://localhost:3000/api-docs
