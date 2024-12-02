@@ -157,7 +157,8 @@ npm start
 ```bash
 docker ps
 
-result supposed to be like this
+result supposed to be like this below:
+
 CONTAINER ID   IMAGE               COMMAND                  CREATED              STATUS                        PORTS                    NAMES
 1cb1dff77a6c   blog_app-frontend   "docker-entrypoint.s…"   About a minute ago   Up About a minute             0.0.0.0:3001->3000/tcp   blog_frontend
 29a55484e4d6   blog_app-backend    "docker-entrypoint.s…"   About a minute ago   Up About a minute             0.0.0.0:3000->3000/tcp   blog_backend
